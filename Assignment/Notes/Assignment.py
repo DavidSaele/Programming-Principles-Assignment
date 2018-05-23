@@ -28,6 +28,9 @@ for user in user_dict.keys():
     if user_dict[user][1][0] is not "RT" and user_dict[user][1][0] is not "DM":
         user_dict[user][3] = len(user_dict[user][1][2])
 
+
+#Function is returning either the amount of people n users follows or the amount of tweets the top n users have
+
 def find_popular(dict, type, n):
     if type == "users":
         following_count_list = []
@@ -35,14 +38,14 @@ def find_popular(dict, type, n):
             following_count_list.append(dict[key][2])
             following_count_list = list(set(following_count_list))
 
-        #print("printing users which is following the most")
+        #print("printing users which is following the most people")
 
         pos_count = len(following_count_list) - 1
         counter = n
         while counter != 0:
             for key in dict.keys():
                 if dict[key][2] == following_count_list[pos_count]:
-                    print("User:", key, "has", following_count_list[pos_count], "followers")
+                    print("User:", key, "follows", following_count_list[pos_count], "people")
             counter -= 1
             pos_count -= 1
 
@@ -63,5 +66,5 @@ def find_popular(dict, type, n):
             counter -= 1
             pos_count -= 1
 
-find_popular(user_dict, "tweets", 2)
+find_popular(user_dict, "users", 3)
 
