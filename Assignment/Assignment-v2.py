@@ -17,6 +17,7 @@ def PrintDictionary(dictionary):
 
 def ReadFollowingFile(dictionary, file):
     for line in file:
+        print("Reading follows.txt.")
         users = line.split(' ')
         #Clean up the array of newline character.
         users[-1] = users[-1].replace('\n', '')
@@ -29,20 +30,10 @@ def ReadStreamFile(dictionary, file):
     tweets = []
     count = 0
     for line in file:
+        print("Reading stream.txt.")
         count += 1
         tweets = line.split(' ')
         tweets[-1] = tweets[-1].replace('\n', '')
-
-        for word in tweets[1:]:
-            if '@' in word:
-                word = ''.join([i for i in word if i.isalnum()])
-                # print(count)
-                # if word in dictionary.keys():
-                    # print(True)
-                if word in dictionary.keys():
-                    dictionary[word][5] += 1
-                # if word == "DOTdXzchnJM":
-                #     
 
         if tweets[1] == "RT" or tweets[1] == "DM":
             tmpLst = [str(tweets[1]), str(tweets[2]), ' '.join(tweets[3:])]
@@ -53,18 +44,31 @@ def ReadStreamFile(dictionary, file):
         else:
             tmpLst = [None, ' '.join(tweets[1:])]
             dictionary[tweets[0]][1].append(tmpLst)
-
-        for key in dictionary.keys():
-            if tweets[0] in dictionary[key][0]:
-                dictionary[key][5] += 1
-
-    for key in dictionary.keys():
-        count = 0
-        for tweet in dictionary[key][1]:
-            if tweet[0] == None:
-                count += 1
-        dictionary[key][3] = count
-
+#################################################################UPDATED###############################################################################
+        if tweets[1] != "DM" and tweets[1] != "RT":
+            for key in dictionary.keys():
+                if tweets[0] in dictionary[key][0]:
+                    dictionary[key][5] += 1
+                for word in tweets[1:]:
+                    if '@' in word:
+                        word = ''.join([i for i in word if i.isalnum()])
+                        if word == key:
+                            dictionary[key][5] += 1
+        elif tweets[1] == "RT":
+            for key in dictionary.keys():
+                if tweets[0] == dictionary[key][5]:
+                    dictionary[key][5] += 1
+                for word in tweets[2:]:
+                    if '@' in word:
+                        word = ''.join([i for i in word if i.isalnum()])
+                        if word == key:
+                            dictionary[key][5] += 1
+        elif tweets[1] == "DM":
+            for word in tweets[2:]:
+                if '@' in word:
+                    word = ''.join([i for i in word if i.isalnum()])    
+                    dictionary[word][5] += 1
+#################################################################UPDATED###############################################################################
     return dictionary
 
 def CreateDictionary(dictionary, followFle, streamFle):
@@ -156,8 +160,8 @@ def MostSeenTweets(dictionary):
             count += 1
 
 #Open the files that are going to be used.
-followingFile = open("dummy-data-1/follows.txt")
-streamFile = open("dummy-data-1/stream.txt")
+followingFile = open("dummy-data-1/follows.txt", 'r')
+streamFile = open("dummy-data-1/stream.txt", 'r')
 #The main structure that we will hold all of the data in.
 userDictionary = {}
 
@@ -166,6 +170,8 @@ MostSocialUser(userDictionary)
 MostTweets(userDictionary)
 MostQuoted(userDictionary)
 MostSeenTweets(userDictionary)
+# for key in userDictionary.keys():
+#     print(key, userDictionary[key][5])
 
 #Close the files we were using.
 followingFile.close()
