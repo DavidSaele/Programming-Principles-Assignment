@@ -140,7 +140,7 @@ def MostTweets(dictionary):
         # the count.
         while count < n:
             for key in dictionary.keys():
-                if dictionary[key][3] == tempList[count]:
+                if dictionary[key][3] == tempList[count] and tempList[count] != 0:
                     print(tempList[count], key)
             count += 1
 
@@ -179,7 +179,7 @@ def MostQuoted(dictionary):
         # until n is equal to the count.
         while count < n:
             for key in dictionary.keys():
-                if dictionary[key][4] == tempList[count]:
+                if dictionary[key][4] == tempList[count] and tempList[count] != 0:
                     print(tempList[count], key)
             count += 1
 
@@ -217,14 +217,14 @@ def MostSeenTweets(dictionary):
         # the count.
         while count < n:
             for key in dictionary.keys():
-                if dictionary[key][5] == tempList[count]:
+                if dictionary[key][5] == tempList[count] and tempList[count] != 0:
                     print(tempList[count], key)
             count += 1
 
 
 # Open the files that are going to be used.
-followingFile = open('large-data-1/follows.txt', "r")
-streamFile = open('large-data-1/stream.txt', "r")
+followingFile = open('dummy-data-1/follows.txt', "r")
+streamFile = open('dummy-data-1/stream.txt', "r")
 # The main structure that we will hold all of the data in.
 userDictionary = {}
 
