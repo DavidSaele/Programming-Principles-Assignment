@@ -223,12 +223,12 @@ def MostSeenTweets(dictionary):
 
 
 # Open the files that are going to be used.
-followingFile = open('dummy-data-1/follows.txt', "r")
-streamFile = open('dummy-data-1/stream.txt', "r")
+followingFile = open("large-data-1/follows.txt")
+streamFile = open("large-data-1/stream.txt")
 # The main structure that we will hold all of the data in.
 userDictionary = {}
 
-# This code creates the userDictionary and print each function sorted by task.
+# This code creates the userDictionary and runs each function sorted by task.
 userDictionary = CreateDictionary(userDictionary, followingFile, streamFile)
 # Task 1, prints the most social user
 MostSocialUser(userDictionary)
